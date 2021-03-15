@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             x:Class="LeaveTracker.Pages.LeaveTrackerBoardPage"
+             BackgroundColor="#00BAED">
+    <Grid VerticalOptions="FillAndExpand" Padding="0" RowSpacing="0"
+          HorizontalOptions="CenterAndExpand" Margin="0"
+          BackgroundColor="#00BAED">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="4*" />
+            <RowDefinition Height="6*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Image Source="list" HeightRequest="20"
+                   WidthRequest="20"
+                    Margin="8,0,0,0"
+                   HorizontalOptions="StartAndExpand"
+                   Grid.Column="0"/>
+            <Label Text="My Leave Balance"
+                   Grid.Column="1"
+                   TextColor="White"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalTextAlignment="Center"
+                   HorizontalTextAlignment="Center"/>
+
+            <Image Source="notification" HeightRequest="20"
+                   WidthRequest="20"
+                   Margin="6,8,8,5"
+                   HorizontalOptions="EndAndExpand"
+                   Grid.Column="2"/>
+            <Frame Padding="0"
+                   Grid.Column="2"
+                   Margin="0,0,20,8"
+                   WidthRequest="16"
+                   BackgroundColor="#FEBC3F"
+                   BorderColor="White"
+                   HorizontalOptions="EndAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   HeightRequest="16"
+                   IsClippedToBounds="True"
+                   CornerRadius="8">
+                <Label Text="2"
+                       Padding="1,1,1,3"
+                            HorizontalOptions="CenterAndExpand"
+                       VerticalOptions="CenterAndExpand"
+                            VerticalTextAlignment="Center"
+                            HorizontalTextAlignment="Center"
+                           TextColor="White"
+                           FontSize="Micro"/>
+            </Frame>
+        </Grid>
+        <skia:SKCanvasView x:Name="canvas"
+                               Grid.Row="1"
+                            PaintSurface="canvas_PaintSurface"
+                            BackgroundColor="#00BAED"/>
+
+        <StackLayout Orientation="Vertical" Grid.Row="2"
+                     Spacing="1" HorizontalOptions="FillAndExpand"
+                     Margin="0"
+                     Padding="0"
+                     VerticalOptions="FillAndExpand"
+                     BackgroundColor="White"  >
+            <StackLayout Orientation="Vertical" Spacing="0">
+
+                <StackLayout Orientation="Horizontal"
+                             HorizontalOptions="CenterAndExpand">
+                    <StackLayout Orientation="Vertical"
+                                 HorizontalOptions="Center"
+                                 Spacing="0"
+                                 Padding="0,15,10,0">
+                        <Label Text="Approved Leaves"
+                               FontSize="Micro"
+                               FontAttributes="Bold"
+                               TextColor="Black"
+                               Margin="5"
+                                HorizontalOptions="CenterAndExpand"
+                               VerticalOptions="CenterAndExpand"
+                               VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Center"/>
+                        <BoxView Color="#00BAED" VerticalOptions="EndAndExpand"  HeightRequest="2"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical"
+                                 HorizontalOptions="Center"
+                                 BackgroundColor="White"
+                                 Padding="0,15,10,5">
+                        <Label Text="Pending for approval"
+                               TextColor="Black"
+                               HorizontalOptions="CenterAndExpand"
+                                VerticalOptions="CenterAndExpand"
+                               FontSize="Micro"
+                               VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Center"/>
+                        <BoxView Color="Transparent" HeightRequest="2"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical"
+                                 HorizontalOptions="Center"
+                                 BackgroundColor="White"
+                                 Padding="0,15,10,5">
+                        <Label Text="Denied Leaves" TextColor="Black"  Padding="10"
+                               FontSize="Micro" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                        <BoxView Color="Transparent" HeightRequest="2"/>
+                    </StackLayout>
+                </StackLayout>
+                <BoxView HeightRequest="2" Margin="0" BackgroundColor="#E2E2E2"/>
+            </StackLayout>
+            <StackLayout Orientation="Vertical" Spacing="0" Padding="0" Margin="-2" BackgroundColor="White">
+                <ScrollView >
+                    <ListView x:Name="lstView"  BackgroundColor="White" RowHeight="50" HasUnevenRows = "true"  HeightRequest="400" IsPullToRefreshEnabled="false" ItemsSource="{Binding LeaveBalanceList}"
+                      SeparatorVisibility="None">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell IsEnabled="false">
+                                    <Grid Padding="4" BackgroundColor="White">
+                                        <Frame CornerRadius="6" BackgroundColor="#00B2DD"
+                                               Padding="8" Margin="6">
+                                            <StackLayout Orientation="Vertical">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                     <Label  VerticalOptions="StartAndExpand"
+                                                            FontAttributes="Bold"
+                                                            TextColor="White"
+                                                             Grid.Column="0"
+                                                            VerticalTextAlignment="Center"
+                                                            Text="{Binding Duration}"
+                                                            FontSize="Medium"/>
+                                                    <Image Source="checkMark1"
+                                                           HeightRequest="10"
+                                                           Grid.Column="1"
+                                                           HorizontalOptions="End"
+                                                           WidthRequest="10" />
+                                                    <Label  VerticalOptions="Center"
+                                                            HorizontalOptions="EndAndExpand"
+                                                            TextColor="White"
+                                                            Grid.Column="2"
+                                                            VerticalTextAlignment="Center"
+                                                            Text="{Binding AprovedDate}"
+                                                            FontSize="Micro"/>
+
+                                                </Grid>
+                                                <StackLayout Orientation="Vertical">
+                                                    <Label  VerticalOptions="CenterAndExpand"
+                                                            FontAttributes="Bold"
+                                                            TextColor="White"
+                                                            VerticalTextAlignment="Center"
+                                                            Text="{Binding NextLabel}"
+                                                            FontSize="Micro"/>
+                                                    <Label  VerticalOptions="CenterAndExpand"
+                                                            TextColor="White"
+                                                            VerticalTextAlignment="Center"
+                                                            Text="{Binding Summary}"
+                                                            FontSize="Micro"/>
+                                                </StackLayout>
+                                            </StackLayout>
+                                        </Frame>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollView>
+            </StackLayout>
+            <Slider x:Name="sweepAngleSlider"
+                   ValueChanged="sliderValueChanged"
+                   Minimum="0" Maximum="260"
+                   IsVisible="false"/>
+        </StackLayout>
+    </Grid>
+
+</ContentPage>
